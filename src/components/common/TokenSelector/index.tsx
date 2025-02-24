@@ -9,16 +9,12 @@ import { FixedSizeList } from 'react-window';
 import { Address, isAddress } from 'viem';
 import { useAccount, useBalance } from 'wagmi';
 import CurrencyLogo from '../CurrencyLogo';
-import {
-  ADDRESS_ZERO,
-  Currency,
-  ExtendedNative,
-  Token,
-} from '@cryptoalgebra/integral-sdk';
+import { ADDRESS_ZERO, Currency, Token } from '@cryptoalgebra/integral-sdk';
 import { useTokensState } from '@/state/tokensStore';
 import { Copy } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatBalance } from '@/utils/common/formatBalance';
+import { ExtendedNative } from '@/entities/ExtendedNative';
 
 const TokenSelectorView = {
   DEFAULT_LIST: 'DEFAULT_LIST',

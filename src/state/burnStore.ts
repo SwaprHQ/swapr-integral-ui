@@ -14,6 +14,8 @@ import { useCallback, useMemo } from 'react';
 import { Address, useAccount } from 'wagmi';
 import { create } from 'zustand';
 
+import AlgebraConfig from '@/algebra.config';
+
 interface BurnState {
   readonly percent: number;
   actions: {
@@ -54,6 +56,9 @@ export function useDerivedBurnInfo(
     (computePoolAddress({
       tokenA: currency0.wrapped,
       tokenB: currency1.wrapped,
+      initCodeHashManualOverride:
+        AlgebraConfig.V3_CONTRACTS.POOL_INIT_CODE_HASH,
+      poolDeployer: AlgebraConfig.V3_CONTRACTS.POOL_DEPLOYER_ADDRESS,
     }) as Address);
 
   const [, pool] = usePool(poolId);

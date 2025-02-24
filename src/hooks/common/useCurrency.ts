@@ -1,5 +1,5 @@
 import { Address } from 'wagmi';
-import { Currency, ExtendedNative, WNATIVE } from '@cryptoalgebra/integral-sdk';
+import { Currency } from '@cryptoalgebra/integral-sdk';
 import { ADDRESS_ZERO } from '@cryptoalgebra/integral-sdk';
 import {
   DEFAULT_CHAIN_ID,
@@ -7,6 +7,8 @@ import {
   DEFAULT_NATIVE_SYMBOL,
 } from '@/constants/default-chain-id';
 import { useAlgebraToken } from './useAlgebraToken';
+import { ExtendedNative } from '@/entities/ExtendedNative';
+import { WNATIVE } from '@/entities/WNative';
 
 export function useCurrency(
   address: Address | undefined,
