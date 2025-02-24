@@ -1,5 +1,5 @@
-import { Native, Token } from "@cryptoalgebra/integral-sdk";
-import { WNATIVE } from "./WNative";
+import { Native, Token } from '@cryptoalgebra/integral-sdk';
+import { WNATIVE } from './WNative';
 
 export class ExtendedNative extends Native {
   private static _cachedNative: { [chainId: number]: ExtendedNative } = {};
