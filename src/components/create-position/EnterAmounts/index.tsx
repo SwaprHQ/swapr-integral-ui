@@ -1,9 +1,13 @@
-import { useNeedAllowance } from "@/hooks/common/useNeedAllowance";
-import { IDerivedMintInfo, useMintState, useMintActionHandlers } from "@/state/mintStore";
-import { Currency,  Field, } from "@cryptoalgebra/integral-sdk";
-import { useEffect, useMemo } from "react";
-import EnterAmountCard from "../EnterAmountsCard";
-import { ALGEBRA_POSITION_MANAGER } from "@/constants/addresses";
+import { useNeedAllowance } from '@/hooks/common/useNeedAllowance';
+import {
+  IDerivedMintInfo,
+  useMintState,
+  useMintActionHandlers,
+} from '@/state/mintStore';
+import { Currency, Field } from '@cryptoalgebra/integral-sdk';
+import { useEffect, useMemo } from 'react';
+import EnterAmountCard from '../EnterAmountsCard';
+import { ALGEBRA_POSITION_MANAGER } from '@/constants/addresses';
 
 interface EnterAmountsProps {
   currencyA: Currency | undefined;
@@ -11,7 +15,11 @@ interface EnterAmountsProps {
   mintInfo: IDerivedMintInfo;
 }
 
-const EnterAmounts = ({ currencyA, currencyB, mintInfo }: EnterAmountsProps) => {
+const EnterAmounts = ({
+  currencyA,
+  currencyB,
+  mintInfo,
+}: EnterAmountsProps) => {
   const { independentField, typedValue } = useMintState();
 
   const { onFieldAInput, onFieldBInput } = useMintActionHandlers(
@@ -23,7 +31,6 @@ const EnterAmounts = ({ currencyA, currencyB, mintInfo }: EnterAmountsProps) => 
     [mintInfo.dependentField]:
       mintInfo.parsedAmounts[mintInfo.dependentField]?.toSignificant(6) ?? '',
   };
-
 
   const currencyAError = useMemo(() => {
     if (
@@ -72,10 +79,10 @@ const EnterAmounts = ({ currencyA, currencyB, mintInfo }: EnterAmountsProps) => 
 
   useEffect(() => {
     return () => {
-      onFieldAInput('')
-      onFieldBInput('')
-    }
-  }, [])
+      onFieldAInput('');
+      onFieldBInput('');
+    };
+  }, []);
 
   return (
     <div className="flex flex-col md:flex-row lg:flex-col gap-2">

@@ -1,5 +1,5 @@
 export const formatPercent = new Intl.NumberFormat('en-us', {
-    style: 'percent',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-})
+  style: 'percent',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});

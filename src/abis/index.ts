@@ -8,4 +8,3 @@ export * from './plugins';
 export * from './farming';
 export * from './tokens';
 export * from './algebraVirtualPool';
-
