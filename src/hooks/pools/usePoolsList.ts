@@ -1,8 +1,9 @@
 import { algebraFactoryABI } from '@/abis/algebraFactory';
-import { ALGEBRA_FACTORY } from '@/constants/addresses';
 import { useEffect, useState } from 'react';
 import { Address, decodeEventLog, parseAbiItem } from 'viem';
 import { usePublicClient } from 'wagmi';
+
+import AlgebraConfig from '@/algebra.config';
 
 interface IPools {
   readonly token0: Address;
@@ -10,8 +11,7 @@ interface IPools {
   readonly pool: Address;
 }
 
-// const ALGEBRA_FACTORY_CREATION_BLOCK = 18455522n
-const ALGEBRA_FACTORY_CREATION_BLOCK = 32610688n;
+const ALGEBRA_FACTORY_CREATION_BLOCK = 30096675n;
 
 export function usePoolsList() {
   const publicClient = usePublicClient();
@@ -21,7 +21,7 @@ export function usePoolsList() {
   useEffect(() => {
     publicClient
       .getLogs({
-        address: ALGEBRA_FACTORY,
+        address: AlgebraConfig.V3_CONTRACTS.FACTORY_ADDRESS as Address,
         event: parseAbiItem('event Pool(address, address, address)'),
         fromBlock: ALGEBRA_FACTORY_CREATION_BLOCK,
         toBlock: 'latest',

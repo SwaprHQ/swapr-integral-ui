@@ -1,7 +1,8 @@
-import { ALGEBRA_POSITION_MANAGER } from '@/constants/addresses';
 import { useAlgebraPositionManagerTokenUri } from '@/generated';
 import { ExternalLinkIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+
+import AlgebraConfig from '@/algebra.config';
 
 interface PositionNFTProps {
   positionId: number;
@@ -17,7 +18,7 @@ const PositionNFT = ({ positionId }: PositionNFTProps) => {
   const json =
     uri && JSON.parse(atob(uri.slice('data:application/json;base64,'.length)));
 
-  const openSeaLink = `https://testnets.opensea.io/assets/holesky/${ALGEBRA_POSITION_MANAGER}/${positionId}`;
+  const openSeaLink = `https://testnets.opensea.io/assets/holesky/${AlgebraConfig.V3_CONTRACTS.NONFUNGIBLE_POSITION_MANAGER_ADDRESS}/${positionId}`;
 
   useEffect(() => {
     if (!imgRef?.current || !json) return;

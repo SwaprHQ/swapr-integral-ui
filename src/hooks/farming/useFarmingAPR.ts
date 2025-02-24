@@ -1,9 +1,14 @@
-import { ETERNAL_FARMINGS_API, fetcher } from '@/constants/api';
+import { fetcher } from '@/constants/api';
 import { useMemo } from 'react';
 import useSWR from 'swr';
 
+import AlgebraConfig from '@/algebra.config';
+
 export function useFarmingAPR({ farmingId }: { farmingId: string }): string {
-  const { data: farmingsAPR } = useSWR(ETERNAL_FARMINGS_API, fetcher);
+  const { data: farmingsAPR } = useSWR(
+    AlgebraConfig.API.eternalFarmsAPR,
+    fetcher
+  );
 
   return useMemo(() => {
     if (!farmingsAPR) {

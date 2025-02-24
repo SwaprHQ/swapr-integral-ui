@@ -19,6 +19,8 @@ import SelectPair from '../SelectPair';
 import { STABLECOINS } from '@/constants/tokens';
 import { TransactionType } from '@/state/pendingTransactionsStore';
 
+import AlgebraConfig from '@/algebra.config';
+
 const CreatePoolForm = () => {
   const { currencies } = useDerivedSwapInfo();
 
@@ -44,6 +46,9 @@ const CreatePoolForm = () => {
       ? (computePoolAddress({
           tokenA: currencyA.wrapped,
           tokenB: currencyB.wrapped,
+          initCodeHashManualOverride:
+            AlgebraConfig.V3_CONTRACTS.POOL_INIT_CODE_HASH,
+          poolDeployer: AlgebraConfig.V3_CONTRACTS.POOL_DEPLOYER_ADDRESS,
         }) as Address)
       : undefined;
 
@@ -100,7 +105,7 @@ const CreatePoolForm = () => {
 
     return () => {
       selectCurrency(SwapField.INPUT, ADDRESS_ZERO);
-      selectCurrency(SwapField.OUTPUT, STABLECOINS.USDT.address as Account);
+      selectCurrency(SwapField.OUTPUT, STABLECOINS.USDT.address as Address);
       typeStartPriceInput('');
     };
   }, []);

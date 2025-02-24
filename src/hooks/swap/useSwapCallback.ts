@@ -47,7 +47,7 @@ export function useSwapCallback(
 
   useEffect(() => {
     async function findBestCall() {
-      if (!swapCalldata || !account) return;
+      if (!swapCalldata || !swapCalldata.length || !account || trade) return;
 
       setBestCall(undefined);
 

@@ -1,4 +1,3 @@
-import { FARMING_CENTER } from '@/constants/addresses';
 import { farmingCenterABI } from '@/generated';
 import { Address, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { encodeFunctionData } from 'viem';
@@ -9,6 +8,8 @@ import { farmingClient } from '@/graphql/clients';
 import { Deposit } from '@/graphql/generated/graphql';
 import { TransactionType } from '@/state/pendingTransactionsStore';
 import { useTransactionAwait } from '../common/useTransactionAwait';
+
+import AlgebraConfig from '@/algebra.config';
 
 export function useFarmStake({
   tokenId,
@@ -27,7 +28,10 @@ export function useFarmStake({
 
   const [isQueryLoading, setIsQueryLoading] = useState<boolean>(false);
 
-  const address = tokenId && approved ? FARMING_CENTER : undefined;
+  const address =
+    tokenId && approved
+      ? (AlgebraConfig.V3_CONTRACTS.FARMING_CENTER_ADDRESS as Address)
+      : undefined;
 
   const { config } = usePrepareContractWrite({
     address,
@@ -139,7 +143,10 @@ export function useFarmUnstake({
   ];
 
   const { config } = usePrepareContractWrite({
-    address: account && tokenId ? FARMING_CENTER : undefined,
+    address:
+      account && tokenId
+        ? (AlgebraConfig.V3_CONTRACTS.FARMING_CENTER_ADDRESS as Address)
+        : undefined,
     abi: farmingCenterABI,
     functionName: 'multicall',
     args: [calldatas],
