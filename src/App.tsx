@@ -1,14 +1,14 @@
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
-import './styles/_colors.css'
-import './App.css'
+import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react';
+import './styles/_colors.css';
+import './App.css';
 
-import { WagmiConfig } from 'wagmi'
-import Layout from "@/components/common/Layout"
-import { defineChain } from "viem"
+import { WagmiConfig } from 'wagmi';
+import Layout from '@/components/common/Layout';
+import { defineChain } from 'viem';
 
-import ETHLogo from '@/assets/tokens/ether.svg'
+import ETHLogo from '@/assets/tokens/ether.svg';
 
-const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID
+const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
 
 const holeskyChain = defineChain({
   id: 17000,
@@ -40,33 +40,39 @@ const holeskyChain = defineChain({
     },
   },
   testnet: true,
-})
+});
 
-const chains = [holeskyChain]
-const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata: { name: 'Algebra Integral', description: 'DEX Engine', url: 'https://integral.algebra.finance', icons: [''] } })
+const chains = [holeskyChain];
+const wagmiConfig = defaultWagmiConfig({
+  chains,
+  projectId,
+  metadata: {
+    name: 'Algebra Integral',
+    description: 'DEX Engine',
+    url: 'https://integral.algebra.finance',
+    icons: [''],
+  },
+});
 
-createWeb3Modal({ 
-  wagmiConfig, 
-  projectId, 
-  chains, 
+createWeb3Modal({
+  wagmiConfig,
+  projectId,
+  chains,
   chainImages: {
-    17000: ETHLogo
+    17000: ETHLogo,
   },
   defaultChain: holeskyChain,
   themeVariables: {
-    '--w3m-accent': '#2797ff'
-  }
-})
+    '--w3m-accent': '#2797ff',
+  },
+});
 
 function App({ children }: { children: React.ReactNode }) {
-
   return (
     <WagmiConfig config={wagmiConfig}>
-        <Layout>
-          {children}
-        </Layout>
+      <Layout>{children}</Layout>
     </WagmiConfig>
-  )
+  );
 }
 
-export default App
+export default App;

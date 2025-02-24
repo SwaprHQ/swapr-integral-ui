@@ -1,26 +1,24 @@
-import { useRouteError } from "react-router-dom";
+import { useRouteError } from 'react-router-dom';
 
-interface RouteError { 
-    statusText: string; 
-    message: string; 
+interface RouteError {
+  statusText: string;
+  message: string;
 }
 
 const Page404 = () => {
+  const error = useRouteError() as RouteError;
 
-    const error = useRouteError() as RouteError;
+  console.error(error);
 
-    console.error(error);
-
-    return (
-        <div id="error-page">
-            <h1>Oops!</h1>
-            <p>Sorry, an unexpected error has occurred.</p>
-            <p>
-                <i>{error?.statusText || error?.message}</i>
-            </p>
-        </div>
-    );
-
-}
+  return (
+    <div id="error-page">
+      <h1>Oops!</h1>
+      <p>Sorry, an unexpected error has occurred.</p>
+      <p>
+        <i>{error?.statusText || error?.message}</i>
+      </p>
+    </div>
+  );
+};
 
 export default Page404;

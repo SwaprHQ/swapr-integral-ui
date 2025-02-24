@@ -4,50 +4,49 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import deepMerge from 'lodash.merge';
 
 type FilteredPositions = {
-    [key in PositionsStatus]: boolean;
+  [key in PositionsStatus]: boolean;
 };
 
 interface FilterStore {
-    filterStatus: FilteredPositions;
-    actions: {
-        setFilterStatus: (positionStatus: PositionsStatus) => void;
-        reset: () => void;
-    };
+  filterStatus: FilteredPositions;
+  actions: {
+    setFilterStatus: (positionStatus: PositionsStatus) => void;
+    reset: () => void;
+  };
 }
 
 export const usePositionFilterStore = create(
-    persist<FilterStore>(
-        (set) => ({
+  persist<FilterStore>(
+    set => ({
+      filterStatus: {
+        [PositionsStatus.OPEN]: true,
+        [PositionsStatus.ON_FARMING]: true,
+        [PositionsStatus.CLOSED]: false,
+      },
+      actions: {
+        setFilterStatus: (positionStatus: PositionsStatus) => {
+          set(state => ({
             filterStatus: {
-                [PositionsStatus.OPEN]: true,
-                [PositionsStatus.ON_FARMING]: true,
-                [PositionsStatus.CLOSED]: false,
+              ...state.filterStatus,
+              [positionStatus]: !state.filterStatus[positionStatus],
             },
-            actions: {
-                setFilterStatus: (positionStatus: PositionsStatus) => {
-                    set((state) => ({
-                        filterStatus: {
-                            ...state.filterStatus,
-                            [positionStatus]:
-                                !state.filterStatus[positionStatus],
-                        },
-                    }));
-                },
-                reset: () =>
-                    set({
-                        filterStatus: {
-                            [PositionsStatus.OPEN]: true,
-                            [PositionsStatus.ON_FARMING]: true,
-                            [PositionsStatus.CLOSED]: false,
-                        },
-                    }),
+          }));
+        },
+        reset: () =>
+          set({
+            filterStatus: {
+              [PositionsStatus.OPEN]: true,
+              [PositionsStatus.ON_FARMING]: true,
+              [PositionsStatus.CLOSED]: false,
             },
-        }),
-        {
-            name: 'position-filter-storage',
-            storage: createJSONStorage(() => localStorage),
-            merge: (persistedState, currentState) =>
-                deepMerge(currentState, persistedState),
-        }
-    )
+          }),
+      },
+    }),
+    {
+      name: 'position-filter-storage',
+      storage: createJSONStorage(() => localStorage),
+      merge: (persistedState, currentState) =>
+        deepMerge(currentState, persistedState),
+    }
+  )
 );

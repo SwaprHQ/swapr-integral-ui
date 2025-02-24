@@ -1,7 +1,7 @@
-import { IDerivedMintInfo } from "@/state/mintStore";
-import { Bound, Currency, Price, Token } from "@cryptoalgebra/integral-sdk";
+import { IDerivedMintInfo } from '@/state/mintStore';
+import { Bound, Currency, Price, Token } from '@cryptoalgebra/integral-sdk';
 import { useMemo } from 'react';
-import RangeSelectorPart from "../RangeSelectorPart";
+import RangeSelectorPart from '../RangeSelectorPart';
 
 export interface RangeSelectorProps {
   priceLower: Price<Token, Token> | undefined;
@@ -46,7 +46,6 @@ const RangeSelector = ({
   const rightPrice = useMemo(() => {
     return isSorted ? priceUpper : priceLower?.invert();
   }, [isSorted, priceUpper, priceLower]);
-
 
   return (
     <>
