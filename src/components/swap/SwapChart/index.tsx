@@ -220,7 +220,7 @@ const SwapChart = () => {
       chartCreated.timeScale().fitContent();
       chartCreated.timeScale().scrollToPosition(0, false);
     }
-  }, [chartCreated, chartRef, chartRef]);
+  }, [chartCreated, chartRef]);
 
   const isClient = typeof window === 'object';
   useEffect(() => {
