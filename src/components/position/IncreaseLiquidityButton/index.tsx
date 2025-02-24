@@ -1,6 +1,5 @@
 import Loader from '@/components/common/Loader';
 import { Button } from '@/components/ui/button';
-import { ALGEBRA_POSITION_MANAGER } from '@/constants/addresses';
 import {
   DEFAULT_CHAIN_ID,
   DEFAULT_CHAIN_NAME,
@@ -24,6 +23,8 @@ import { useWeb3Modal, useWeb3ModalState } from '@web3modal/wagmi/react';
 import JSBI from 'jsbi';
 import { useEffect, useMemo } from 'react';
 import { Address, useAccount, useContractWrite } from 'wagmi';
+
+import AlgebraConfig from '@/algebra.config';
 
 interface IncreaseLiquidityButtonProps {
   baseCurrency: Currency | undefined | null;
@@ -82,12 +83,12 @@ export const IncreaseLiquidityButton = ({
   const { approvalState: approvalStateA, approvalCallback: approvalCallbackA } =
     useApprove(
       mintInfo.parsedAmounts[Field.CURRENCY_A],
-      ALGEBRA_POSITION_MANAGER
+      AlgebraConfig.V3_CONTRACTS.NONFUNGIBLE_POSITION_MANAGER_ADDRESS as Address
     );
   const { approvalState: approvalStateB, approvalCallback: approvalCallbackB } =
     useApprove(
       mintInfo.parsedAmounts[Field.CURRENCY_B],
-      ALGEBRA_POSITION_MANAGER
+      AlgebraConfig.V3_CONTRACTS.NONFUNGIBLE_POSITION_MANAGER_ADDRESS as Address
     );
 
   const showApproveA =

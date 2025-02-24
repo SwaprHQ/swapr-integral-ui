@@ -1,13 +1,14 @@
 import { algebraQuoterV2ABI } from '@/abis';
-import { ALGEBRA_QUOTER_V2 } from '@/constants/addresses';
 import {
   Currency,
   CurrencyAmount,
   encodeRouteToPath,
 } from '@cryptoalgebra/integral-sdk';
 import { useMemo } from 'react';
-import { useContractReads } from 'wagmi';
+import { Address, useContractReads } from 'wagmi';
 import { useAllRoutes } from './useAllRoutes';
+
+import AlgebraConfig from '@/algebra.config';
 
 export function useQuotesResults({
   exactInput,
@@ -48,7 +49,7 @@ export function useQuotesResults({
     refetch,
   } = useContractReads({
     contracts: quoteInputs.map((quote: any) => ({
-      address: ALGEBRA_QUOTER_V2,
+      address: AlgebraConfig.V3_CONTRACTS.QUOTER_ADDRESS as Address,
       abi: algebraQuoterV2ABI,
       functionName: functionName,
       args: quote,

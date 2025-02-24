@@ -12,6 +12,8 @@ import {
 } from '@/graphql/generated/graphql';
 import { DEFAULT_CHAIN_ID } from '@/constants/default-chain-id';
 
+import AlgebraConfig from '@/algebra.config';
+
 /**
  * Returns all the existing pools that should be considered for swapping between an input currency and an output currency
  * @param currencyIn the input currency
@@ -51,6 +53,9 @@ export function useSwapPools(
           computePoolAddress({
             tokenA,
             tokenB,
+            initCodeHashManualOverride:
+              AlgebraConfig.V3_CONTRACTS.POOL_INIT_CODE_HASH,
+            poolDeployer: AlgebraConfig.V3_CONTRACTS.POOL_DEPLOYER_ADDRESS,
           }) as Address
       );
 

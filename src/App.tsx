@@ -3,46 +3,15 @@ import './styles/_colors.css';
 import './App.css';
 
 import { WagmiConfig } from 'wagmi';
+import { gnosis } from 'wagmi/chains';
 import Layout from '@/components/common/Layout';
-import { defineChain } from 'viem';
 
 import ETHLogo from '@/assets/tokens/ether.svg';
+import GnosisLogo from '@/assets/gnosis-chain-logo.svg';
 
 const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
 
-const holeskyChain = defineChain({
-  id: 17000,
-  network: 'holesky',
-  name: 'Holesky',
-  nativeCurrency: { name: 'Holesky Ether', symbol: 'ETH', decimals: 18 },
-  rpcUrls: {
-    default: {
-      http: [import.meta.env.VITE_INFURA_RPC],
-    },
-    public: {
-      http: [import.meta.env.VITE_INFURA_RPC],
-    },
-  },
-  blockExplorers: {
-    etherscan: {
-      name: 'Etherscan',
-      url: 'https://holesky.etherscan.io',
-    },
-    default: {
-      name: 'Etherscan',
-      url: 'https://holesky.etherscan.io',
-    },
-  },
-  contracts: {
-    multicall3: {
-      address: '0xca11bde05977b3631167028862be2a173976ca11',
-      blockCreated: 77,
-    },
-  },
-  testnet: true,
-});
-
-const chains = [holeskyChain];
+const chains = [gnosis];
 const wagmiConfig = defaultWagmiConfig({
   chains,
   projectId,
@@ -60,8 +29,9 @@ createWeb3Modal({
   chains,
   chainImages: {
     17000: ETHLogo,
+    100: GnosisLogo,
   },
-  defaultChain: holeskyChain,
+  defaultChain: gnosis,
   themeVariables: {
     '--w3m-accent': '#2797ff',
   },

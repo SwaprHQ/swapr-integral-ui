@@ -15,9 +15,10 @@ import {
   useContractWrite,
   usePrepareContractWrite,
 } from 'wagmi';
-import { ALGEBRA_ROUTER } from '@/constants/addresses';
 import { useTransactionAwait } from './useTransactionAwait';
 import { TransactionType } from '@/state/pendingTransactionsStore';
+
+import AlgebraConfig from '@/algebra.config';
 
 export function useApprove(
   amountToApprove: CurrencyAmount<Currency> | undefined,
@@ -78,5 +79,8 @@ export function useApproveCallbackFromTrade(
         : undefined,
     [trade, allowedSlippage]
   );
-  return useApprove(amountToApprove, ALGEBRA_ROUTER);
+  return useApprove(
+    amountToApprove,
+    AlgebraConfig.V3_CONTRACTS.SWAP_ROUTER_ADDRESS as Address
+  );
 }

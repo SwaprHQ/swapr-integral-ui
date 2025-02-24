@@ -3,7 +3,7 @@ import {
   usePrepareWrappedNativeDeposit,
   usePrepareWrappedNativeWithdraw,
 } from '@/generated';
-import { Currency, WNATIVE, tryParseAmount } from '@cryptoalgebra/integral-sdk';
+import { Currency, tryParseAmount } from '@cryptoalgebra/integral-sdk';
 import { useMemo } from 'react';
 import {
   Address,
@@ -43,7 +43,7 @@ export default function useWrapCallback(
   );
 
   const { config: wrapConfig } = usePrepareWrappedNativeDeposit({
-    address: WNATIVE[chainId].address as Address,
+    address: WNATIVE_EXTENDED[chainId]?.address as Address,
     value: inputAmount ? BigInt(inputAmount.quotient.toString()) : undefined,
   });
 
@@ -51,12 +51,12 @@ export default function useWrapCallback(
 
   const { isLoading: isWrapLoading } = useTransactionAwait(wrapData?.hash, {
     title: `Wrap ${inputAmount?.toSignificant(3)} ${DEFAULT_NATIVE_SYMBOL}`,
-    tokenA: WNATIVE[chainId].address as Address,
+    tokenA: WNATIVE_EXTENDED[chainId]?.address as Address,
     type: TransactionType.SWAP,
   });
 
   const { config: unwrapConfig } = usePrepareWrappedNativeWithdraw({
-    address: WNATIVE[chainId].address as Address,
+    address: WNATIVE_EXTENDED[chainId]?.address as Address,
     args: inputAmount ? [BigInt(inputAmount.quotient.toString())] : undefined,
   });
 
@@ -64,7 +64,7 @@ export default function useWrapCallback(
 
   const { isLoading: isUnwrapLoading } = useTransactionAwait(unwrapData?.hash, {
     title: `Unwrap ${inputAmount?.toSignificant(3)} W${DEFAULT_NATIVE_SYMBOL}`,
-    tokenA: WNATIVE[chainId].address as Address,
+    tokenA: WNATIVE_EXTENDED[chainId]?.address as Address,
     type: TransactionType.SWAP,
   });
 

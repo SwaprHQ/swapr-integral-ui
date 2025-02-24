@@ -27,6 +27,8 @@ import { parseUnits } from 'viem';
 import { Address, useAccount, useBalance } from 'wagmi';
 import { create } from 'zustand';
 
+import AlgebraConfig from '@/algebra.config';
+
 interface SwapState {
   readonly independentField: SwapFieldType;
   readonly typedValue: string;
@@ -149,9 +151,8 @@ export function tryParseAmount<T extends Currency>(
   value?: string,
   currency?: T
 ): CurrencyAmount<T> | undefined {
-  if (!value || !currency) {
-    return undefined;
-  }
+  if (!value || !currency) return undefined;
+
   try {
     const typedValueParsed = parseUnits(value, currency.decimals).toString();
     if (typedValueParsed !== '0') {
@@ -196,10 +197,7 @@ export function useDerivedSwapInfo(): {
   const isExactIn: boolean = independentField === SwapField.INPUT;
   const parsedAmount = useMemo(
     () =>
-      tryParseAmount(
-        typedValue,
-        (isExactIn ? inputCurrency : outputCurrency) ?? undefined
-      ),
+      tryParseAmount(typedValue, isExactIn ? inputCurrency : outputCurrency),
     [typedValue, isExactIn, inputCurrency, outputCurrency]
   );
 
@@ -212,7 +210,7 @@ export function useDerivedSwapInfo(): {
     !isExactIn ? parsedAmount : undefined
   );
 
-  const trade = (isExactIn ? bestTradeExactIn : bestTradeExactOut) ?? undefined;
+  const trade = isExactIn ? bestTradeExactIn : bestTradeExactOut;
 
   const [addressA, addressB] = [
     inputCurrency?.isNative ? undefined : inputCurrency?.address || '',
@@ -289,7 +287,7 @@ export function useDerivedSwapInfo(): {
   const isWrap =
     currencies.INPUT &&
     currencies.OUTPUT &&
-    currencies.INPUT.wrapped.equals(currencies.OUTPUT.wrapped);
+    currencies.INPUT?.wrapped?.equals(currencies.OUTPUT?.wrapped);
 
   const poolAddress = isWrap
     ? undefined
@@ -298,6 +296,9 @@ export function useDerivedSwapInfo(): {
       (computePoolAddress({
         tokenA: currencies[SwapField.INPUT]!.wrapped,
         tokenB: currencies[SwapField.OUTPUT]!.wrapped,
+        initCodeHashManualOverride:
+          AlgebraConfig.V3_CONTRACTS.POOL_INIT_CODE_HASH,
+        poolDeployer: AlgebraConfig.V3_CONTRACTS.POOL_DEPLOYER_ADDRESS,
       }).toLowerCase() as Address);
 
   const { data: globalState } = useAlgebraPoolGlobalState({

@@ -14,6 +14,8 @@ import { useState } from 'react';
 import { Address } from 'wagmi';
 import keyBy from 'lodash.keyby';
 
+import AlgebraConfig from '@/algebra.config';
+
 interface TickProcessed {
   liquidityActive: bigint;
   tickIdx: number;
@@ -78,6 +80,9 @@ export function useInfoTickData() {
     const poolId = computePoolAddress({
       tokenA: currencyA.wrapped,
       tokenB: currencyB.wrapped,
+      initCodeHashManualOverride:
+        AlgebraConfig.V3_CONTRACTS.POOL_INIT_CODE_HASH,
+      poolDeployer: AlgebraConfig.V3_CONTRACTS.POOL_DEPLOYER_ADDRESS,
     }).toLowerCase() as Address;
 
     const { data: pool } = await getPool({

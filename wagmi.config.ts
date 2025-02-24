@@ -1,15 +1,6 @@
 import { ContractConfig, defineConfig } from '@wagmi/cli';
 import { actions, react } from '@wagmi/cli/plugins';
 import {
-  ALGEBRA_ETERNAL_FARMING,
-  ALGEBRA_FACTORY,
-  ALGEBRA_POSITION_MANAGER,
-  ALGEBRA_QUOTER,
-  ALGEBRA_QUOTER_V2,
-  ALGEBRA_ROUTER,
-  FARMING_CENTER,
-} from './src/constants/addresses';
-import {
   algebraFactoryABI,
   algebraPoolABI,
   algebraPositionManagerABI,
@@ -22,10 +13,20 @@ import {
   wNativeABI,
   algebraVirtualPoolABI,
 } from './src/abis';
+import { Address } from 'viem';
+
+const ADDRESSES: { [key: string]: Address } = {
+  FACTORY: '0xA0864cCA6E114013AB0e27cbd5B6f4c8947da766',
+  QUOTER: '0xcBaD9FDf0D2814659Eb26f600EFDeAF005Eda0F7',
+  POSITION_MANAGER: '0x91fD594c46D8B01E62dBDeBed2401dde01817834',
+  ROUTER: '0xfFB643E73f280B97809A8b41f7232AB401a04ee1',
+  ETERNAL_FARMING: '0x607BbfD4CEbd869AaD04331F8a2AD0C3C396674b',
+  FARMING_CENTER: '0xDe51dDF1aE7d5BBD7bF1A0e40aAA1F6C12579106',
+};
 
 const contracts: ContractConfig[] = [
   {
-    address: ALGEBRA_FACTORY,
+    address: ADDRESSES.FACTORY,
     abi: algebraFactoryABI,
     name: 'AlgebraFactory',
   },
@@ -38,32 +39,32 @@ const contracts: ContractConfig[] = [
     name: 'AlgebraBasePlugin',
   },
   {
-    address: ALGEBRA_POSITION_MANAGER,
+    address: ADDRESSES.POSITION_MANAGER,
     abi: algebraPositionManagerABI,
     name: 'AlgebraPositionManager',
   },
   {
-    address: ALGEBRA_QUOTER,
+    address: ADDRESSES.QUOTER,
     abi: algebraQuoterABI,
     name: 'AlgebraQuoter',
   },
   {
-    address: ALGEBRA_QUOTER_V2,
+    address: ADDRESSES.QUOTER,
     abi: algebraQuoterV2ABI,
     name: 'AlgerbaQuoterV2',
   },
   {
-    address: ALGEBRA_ROUTER,
+    address: ADDRESSES.ROUTER,
     abi: algebraRouterABI,
     name: 'AlgebraRouter',
   },
   {
-    address: ALGEBRA_ETERNAL_FARMING,
+    address: ADDRESSES.ETERNAL_FARMING,
     abi: algebraEternalFarmingABI,
     name: 'AlgebraEternalFarming',
   },
   {
-    address: FARMING_CENTER,
+    address: ADDRESSES.FARMING_CENTER,
     abi: farmingCenterABI,
     name: 'FarmingCenter',
   },

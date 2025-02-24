@@ -7,7 +7,9 @@ import {
 import { Currency, Field } from '@cryptoalgebra/integral-sdk';
 import { useEffect, useMemo } from 'react';
 import EnterAmountCard from '../EnterAmountsCard';
-import { ALGEBRA_POSITION_MANAGER } from '@/constants/addresses';
+
+import AlgebraConfig from '@/algebra.config';
+import { Address } from 'viem';
 
 interface EnterAmountsProps {
   currencyA: Currency | undefined;
@@ -68,13 +70,13 @@ const EnterAmounts = ({
   const allowanceA = useNeedAllowance(
     currencyA,
     mintInfo.parsedAmounts[Field.CURRENCY_B],
-    ALGEBRA_POSITION_MANAGER
+    AlgebraConfig.V3_CONTRACTS.NONFUNGIBLE_POSITION_MANAGER_ADDRESS as Address
   );
 
   const allowanceB = useNeedAllowance(
     currencyB,
     mintInfo.parsedAmounts[Field.CURRENCY_B],
-    ALGEBRA_POSITION_MANAGER
+    AlgebraConfig.V3_CONTRACTS.NONFUNGIBLE_POSITION_MANAGER_ADDRESS as Address
   );
 
   useEffect(() => {

@@ -5,16 +5,13 @@ import {
 } from '@/graphql/generated/graphql';
 import { useMemo } from 'react';
 import { Address } from 'viem';
-import {
-  ETERNAL_FARMINGS_API,
-  POOL_AVG_APR_API,
-  POOL_MAX_APR_API,
-  fetcher,
-} from '@/constants/api';
+import { fetcher } from '@/constants/api';
 import useSWR from 'swr';
 import PoolsTable from '@/components/common/Table/poolsTable';
 import { usePositions } from '@/hooks/positions/usePositions';
 import { farmingClient } from '@/graphql/clients';
+
+import AlgebraConfig from '@/algebra.config';
 
 const PoolsList = () => {
   const { data: pools, loading: isPoolsListLoading } = usePoolsListQuery();
@@ -26,15 +23,15 @@ const PoolsList = () => {
   const { positions, loading: isPositionsLoading } = usePositions();
 
   const { data: poolsMaxApr, isLoading: isPoolsMaxAprLoading } = useSWR(
-    POOL_MAX_APR_API,
+    AlgebraConfig.API.poolsAPRmax,
     fetcher
   );
   const { data: poolsAvgApr, isLoading: isPoolsAvgAprLoading } = useSWR(
-    POOL_AVG_APR_API,
+    AlgebraConfig.API.poolsAPR,
     fetcher
   );
   const { data: farmingsAPR, isLoading: isFarmingsAPRLoading } = useSWR(
-    ETERNAL_FARMINGS_API,
+    AlgebraConfig.API.eternalFarmsAPR,
     fetcher
   );
 

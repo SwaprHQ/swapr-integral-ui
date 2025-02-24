@@ -1,5 +1,4 @@
 import { algebraPositionManagerABI } from '@/abis';
-import { ALGEBRA_POSITION_MANAGER } from '@/constants/addresses';
 import { DEFAULT_CHAIN_ID } from '@/constants/default-chain-id';
 import { useAlgebraPositionManagerBalanceOf } from '@/generated';
 import { farmingClient } from '@/graphql/clients';
@@ -7,6 +6,8 @@ import { useDepositsQuery } from '@/graphql/generated/graphql';
 import { Token, computePoolAddress } from '@cryptoalgebra/integral-sdk';
 import { useMemo } from 'react';
 import { Address, useAccount, useContractReads } from 'wagmi';
+
+import AlgebraConfig from '@/algebra.config';
 
 export interface PositionFromTokenId {
   tokenId: number;
@@ -42,7 +43,8 @@ function usePositionsFromTokenIds(tokenIds: any[] | undefined): {
     refetch,
   } = useContractReads({
     contracts: inputs.map(x => ({
-      address: ALGEBRA_POSITION_MANAGER,
+      address: AlgebraConfig.V3_CONTRACTS
+        .NONFUNGIBLE_POSITION_MANAGER_ADDRESS as Address,
       abi: algebraPositionManagerABI,
       functionName: 'positions',
       args: [[Number(x)]],
@@ -63,6 +65,9 @@ function usePositionsFromTokenIds(tokenIds: any[] | undefined): {
           const pool = computePoolAddress({
             tokenA: new Token(DEFAULT_CHAIN_ID, result[2], 18),
             tokenB: new Token(DEFAULT_CHAIN_ID, result[3], 18),
+            initCodeHashManualOverride:
+              AlgebraConfig.V3_CONTRACTS.POOL_INIT_CODE_HASH,
+            poolDeployer: AlgebraConfig.V3_CONTRACTS.POOL_DEPLOYER_ADDRESS,
           }) as Address;
 
           return {
@@ -118,7 +123,8 @@ export function usePositions() {
   const { data: tokenIdResults, isLoading: someTokenIdsLoading } =
     useContractReads({
       contracts: tokenIdsArgs.map(args => ({
-        address: ALGEBRA_POSITION_MANAGER,
+        address: AlgebraConfig.V3_CONTRACTS
+          .NONFUNGIBLE_POSITION_MANAGER_ADDRESS as Address,
         abi: algebraPositionManagerABI,
         functionName: 'tokenOfOwnerByIndex',
         args,
