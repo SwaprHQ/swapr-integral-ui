@@ -1,23 +1,26 @@
 export const SwapChartView = {
-    CANDLES: 'CANDLES',
-    LINE: 'LINE',
-} as const
+  CANDLES: 'CANDLES',
+  LINE: 'LINE',
+} as const;
 
-export type SwapChartViewType = typeof SwapChartView[keyof typeof SwapChartView]
+export type SwapChartViewType =
+  (typeof SwapChartView)[keyof typeof SwapChartView];
 
 export const SwapChartPair = {
-    AB: 'AB',
-    BA: 'BA',
-    A: 'A',
-    B: 'B',
-} as const
+  AB: 'AB',
+  BA: 'BA',
+  A: 'A',
+  B: 'B',
+} as const;
 
-export type SwapChartPairType = typeof SwapChartPair[keyof typeof SwapChartPair]
+export type SwapChartPairType =
+  (typeof SwapChartPair)[keyof typeof SwapChartPair];
 
-export const SwapChartSpan: { WEEK: 'week', DAY: 'day', MONTH: 'month' } = {
-    WEEK: "week",
-    DAY: "day",
-    MONTH: 'month',
-} as const
+export const SwapChartSpan: { WEEK: 'week'; DAY: 'day'; MONTH: 'month' } = {
+  WEEK: 'week',
+  DAY: 'day',
+  MONTH: 'month',
+} as const;
 
-export type SwapChartSpanType = typeof SwapChartSpan[keyof typeof SwapChartSpan]
+export type SwapChartSpanType =
+  (typeof SwapChartSpan)[keyof typeof SwapChartSpan];

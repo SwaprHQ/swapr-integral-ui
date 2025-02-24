@@ -1,12 +1,12 @@
-import * as React from "react"
+import * as React from 'react';
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils';
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`);
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   onUserInput?: (value: string) => void;
-  maxDecimals?: number
+  maxDecimals?: number;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -15,15 +15,21 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <input
         type={type}
         className={cn(
-          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
           className
         )}
         ref={ref}
         onChange={e => {
-          let value = e.target.value.replace(/,/g, ".")
-          value = value.indexOf(".") >= 0 ? value.slice(0, value.indexOf(".") + maxDecimals + 1) : value
-          if (value === "" || inputRegex.test(value.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))) {
-            onUserInput && onUserInput(value)
+          let value = e.target.value.replace(/,/g, '.');
+          value =
+            value.indexOf('.') >= 0
+              ? value.slice(0, value.indexOf('.') + maxDecimals + 1)
+              : value;
+          if (
+            value === '' ||
+            inputRegex.test(value.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+          ) {
+            onUserInput && onUserInput(value);
           }
         }}
         inputMode={'decimal'}
@@ -35,9 +41,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         autoCorrect="off"
         {...props}
       />
-    )
+    );
   }
-)
-Input.displayName = "Input"
+);
+Input.displayName = 'Input';
 
-export { Input }
+export { Input };
